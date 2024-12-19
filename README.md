@@ -47,9 +47,9 @@ d'authentification utilisateur.
 3. **Configuration** :
    Dans votre dossier backend, créez un fichier .env et ajoutez les variables d'environnement suivantes :
     ```bash
-    JWT_SECRET=sDeZHsH333***
-    JWT_EXPIRES_IN=1d
-    ```
+    JWT_SECRET=[remplacer ici avec votre secret_key ]
+    JWT_EXPIRES_IN=[remplacer ici pour determiner la durée de vie du token]
+    ``` 
 
 ## Démarrage
 
@@ -85,6 +85,25 @@ Frontend :
     - context/ : Contexte React pour la gestion de l'authentification.
     - pages/ : Pages React pour l'application.
     - App.js : Point d'entrée principal de l'application React.
+
+## Packages Utilisés
+
+### Backend
+
+- `express` : Framework web pour Node.js.
+- `mongoose` : Outil de modélisation d'objets MongoDB.
+- `bcryptjs` : Hachage de mots de passe.
+- `jsonwebtoken` : Génération et vérification de tokens.
+- `cors` : Activer le partage de ressources entre origines multiples.
+- `dotenv` : Charger les variables d'environnement.
+
+### Frontend
+
+- `react` : Bibliothèque JavaScript pour construire des interfaces utilisateur.
+- `react-router-dom` : Bibliothèque de routage pour React.
+- `axios` : Client HTTP.
+- `react-toastify` : Notifications pour React.
+- `bootstrap` : Framework frontend pour le design réactif.
 
 ## Technologies Utilisées
 
