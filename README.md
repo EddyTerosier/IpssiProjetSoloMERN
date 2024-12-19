@@ -14,8 +14,6 @@ d'authentification utilisateur.
 - [Architecture du Projet](#architecture-du-projet)
 - [Technologies Utilisées](#technologies-utilisées)
 - [Authentification et Sécurité](#authentification-et-sécurité)
-- [Contributions](#contributions)
-- [Licence](#licence)
 
 ## Fonctionnalités
 
