@@ -48,7 +48,7 @@ d'authentification utilisateur.
    Dans votre dossier backend, créez un fichier .env et ajoutez les variables d'environnement suivantes :
     ```bash
     JWT_SECRET=sDeZHsH333***
-    JWT_EXPIRES_IN=1d*
+    JWT_EXPIRES_IN=1d
     ```
 
 ## Démarrage
