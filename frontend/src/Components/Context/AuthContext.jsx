@@ -1,10 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
-import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // null = statut inconnu
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,6 +23,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
   };
+
+  if (isAuthenticated === null) {
+    return null;
+  }
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
