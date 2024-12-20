@@ -2,81 +2,135 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./Register.css";
 
 const Register = ({ onUserAdded }) => {
-  const [newUser, setNewUser] = useState({ name: "", email: "", password: "" });
+  const [newUser, setNewUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    termsAccepted: false,
+  });
   const navigate = useNavigate();
 
-  const addUser = async (event) => {
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setNewUser((prevUser) => ({
+      ...prevUser,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!newUser.termsAccepted) {
+      toast.error("Vous devez accepter les conditions d'utilisation.");
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "http://localhost:8080/users",
-        newUser,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      toast.success("Utilisateur créé avec succès");
-      setNewUser({ name: "", email: "", password: "" });
+      const response = await axios.post("http://localhost:8080/users", {
+        name: `${newUser.firstName} ${newUser.lastName}`,
+        email: newUser.email,
+        password: newUser.password,
+      });
+      toast.success("User created successfully");
+      setNewUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        termsAccepted: false,
+      });
       if (onUserAdded) {
         onUserAdded(response.data);
       }
-      if (!token) {
-        navigate("/");
-      }
+      navigate("/");
     } catch (error) {
       console.error(error);
+      toast.error("Error creating user. Please try again.");
     }
   };
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <h1>Inscription</h1>
-      <form onSubmit={addUser}>
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nom"
-            required
-            value={newUser.name}
-            onChange={(event) =>
-              setNewUser({ ...newUser, name: event.target.value })
-            }
-          />
+    <div className="register-container">
+      <div className="register-card">
+        <div className="text-center mb-4">
+          <h2 className="text-purple">S'inscrire</h2>
+          <p>Enter your credentials to continue</p>
         </div>
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Email"
-            required
-            value={newUser.email}
-            onChange={(event) =>
-              setNewUser({ ...newUser, email: event.target.value })
-            }
-          />
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First Name"
+                name="firstName"
+                value={newUser.firstName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Last Name"
+                name="lastName"
+                value={newUser.lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Email Address / Username"
+              name="email"
+              value={newUser.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group position-relative">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              name="password"
+              value={newUser.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-check mb-3">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              name="termsAccepted"
+              checked={newUser.termsAccepted}
+              onChange={handleInputChange}
+              required
+            />
+            <label className="form-check-label">
+              Agree with <a href="/terms">Terms & Conditions.</a>
+            </label>
+          </div>
+          <button type="submit" className="btn-submit">
+            Sign Up
+          </button>
+        </form>
+        <div className="login-footer">
+          <p>
+            Already have an account? <a href="/">Sign in</a>
+          </p>
         </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Mot de passe"
-            required
-            value={newUser.password}
-            onChange={(event) =>
-              setNewUser({ ...newUser, password: event.target.value })
-            }
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Ajouter
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

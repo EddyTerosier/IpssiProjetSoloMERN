@@ -27,31 +27,44 @@ const Login = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center mt-5">
-      <form onSubmit={handleLogin}>
-        <h1>Connexion</h1>
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <div className="login-container">
+      <div className="login-card">
+        <div className="login-header">
+          <h1>Berry</h1>
+          <h2>Hi, Welcome Back</h2>
+          <p>Enter your credentials to continue</p>
         </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Mot de passe"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <form onSubmit={handleLogin}>
+          <div className="form-group">
+            <label>Email Address / Username</label>
+            <input
+              type="text"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn-submit">
+            Sign In
+          </button>
+        </form>
+        <div className="login-footer">
+          <p>
+            Don't have an account? <a href="/register">Sign up</a>
+          </p>
         </div>
-        <button type={"submit"} className="btn btn-primary">
-          Connexion
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
